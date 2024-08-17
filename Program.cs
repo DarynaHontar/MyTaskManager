@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MyTaskManager.Services;
 
 namespace MyTaskManager
 {
@@ -18,6 +19,10 @@ namespace MyTaskManager
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddScoped<ITaskItemRepository, DBTaskItemRepository>();
+            builder.Services.AddTransient<ITaskItemService, TaskItemService>();
+            builder.Services.AddScoped<ILifeSphereRepository, DBLifeSphereRepository>();
+            builder.Services.AddTransient<ILifeSphereService, LifeSphereService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,7 +32,7 @@ namespace MyTaskManager
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
